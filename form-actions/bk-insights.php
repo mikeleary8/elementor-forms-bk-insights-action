@@ -151,16 +151,6 @@ class Bk_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classe
 
 	}
 
-	protected function bk_email_field( $record, $fields ) {
-		$bk_email_field  = '';
-
-		foreach( $record->get( 'fields' ) as $field_index => $field ) {
-			$field['id'] => esc_html__( $field['type'], 'elementor-forms-bk-action' )
-		}
-
-		return $bk_email_field;
-	}
-
 	
 
 	/**
