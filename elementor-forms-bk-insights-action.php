@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Elementor Forms Brandkrew Insights Action
- * Description: Custom addon which adds new subscriber to Sendy after form submission.
+ * Description: Custom addon which adds new subscriber to Brandkrew Insights after form submission.
  * Plugin URI:  https://elementor.com/
  * Version:     1.0.0
  * Author:      Elementor Developer

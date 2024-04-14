@@ -105,12 +105,12 @@ class Bk_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classe
 
 		$settings = $record->get( 'form_settings' );
 
-		//  Make sure that there is a Sendy installation URL.
+		//  Make sure that there is a Webhook URL
 		if ( empty( $settings['bk_url'] ) ) {
 			return;
 		}
 
-		// Make sure that there is a Sendy email field ID (required by Sendy to subscribe users).
+		// Make sure that there is an email field ID
 		if ( empty( $settings['bk_email_field'] ) ) {
 			return;
 		}
@@ -124,12 +124,12 @@ class Bk_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classe
 			$fields[ $id ] = $field['value'];
 		}
 
-		// Make sure the user entered an email (required by Sendy to subscribe users).
+		// Make sure the user entered an email
 		if ( empty( $fields[ $settings['bk_email_field'] ] ) ) {
 			return;
 		}
 
-		// Request data based on the param list at https://sendy.co/api
+		// Request data for the Webhook
 		$bk_data = [
 			'Name' => $fields[ $settings['bk_name_field'] ],
 			'Email' => $fields[ $settings['bk_email_field'] ],
