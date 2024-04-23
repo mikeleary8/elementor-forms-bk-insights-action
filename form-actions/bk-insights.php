@@ -142,12 +142,16 @@ class Bk_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classe
 		}
 
 		// Send the request.
-		wp_remote_post(
-			$settings['bk_url'],
-			[
-				'body' => $bk_data,
-			]
-		);
+		try {
+			wp_remote_post(
+				$settings['bk_url'],
+				[
+					'body' => $bk_data,
+				]
+			);
+		} catch (Exception $e) {
+			
+		}
 
 	}
 
