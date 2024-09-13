@@ -9,8 +9,8 @@
  * Text Domain: elementor-forms-tyl-action
  *
  * Requires Plugins: elementor
- * Elementor tested up to: 3.23.0
- * Elementor Pro tested up to: 3.23.0
+ * Elementor tested up to: 3.24.1
+ * Elementor Pro tested up to: 3.24.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
