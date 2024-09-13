@@ -4,38 +4,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Elementor form Brandkrew action.
+ * Elementor form TrackYourLeads.co action.
  *
- * Custom Elementor form action which adds new subscriber to Brandkrew Insights SaaS after form submission.
+ * Custom Elementor form action which adds new subscriber to TrackYourLeads.co SaaS after form submission.
  *
  * @since 1.0.0
  */
-class Bk_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classes\Action_Base {
+class Tyl_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classes\Action_Base {
 
 	/**
 	 * Get action name.
 	 *
-	 * Retrieve Brandkrew action name.
+	 * Retrieve TrackYourLeads.co action name.
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 * @return string
 	 */
 	public function get_name() {
-		return 'Brandkrew Insights';
+		return 'TrackYourLeads.co';
 	}
 
 	/**
 	 * Get action label.
 	 *
-	 * Retrieve Brandkrew action label.
+	 * Retrieve TrackYourLeads.co action label.
 	 *
 	 * @since 1.0.0
 	 * @access public
 	 * @return string
 	 */
 	public function get_label() {
-		return esc_html__( 'Bk Insights', 'elementor-forms-bk-action' );
+		return esc_html__( 'TrackYourLeads.co', 'elementor-forms-tyl-action' );
 	}
 
 	/**
@@ -50,9 +50,9 @@ class Bk_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classe
 	public function register_settings_section( $widget ) {
 
 		$widget->start_controls_section(
-			'section_bk',
+			'section_tyl',
 			[
-				'label' => esc_html__( 'Brandkrew Insights', 'elementor-forms-bk-action' ),
+				'label' => esc_html__( 'TrackYourLeads.co', 'elementor-forms-tyl-action' ),
 				'condition' => [
 					'submit_actions' => $this->get_name(),
 				],
@@ -60,28 +60,28 @@ class Bk_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classe
 		);
 
 		$widget->add_control(
-			'bk_url',
+			'tyl_url',
 			[
-				'label' => esc_html__( 'Webhook URL', 'elementor-forms-bk-action' ),
+				'label' => esc_html__( 'Webhook URL', 'elementor-forms-tyl-action' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
-				'placeholder' => 'https://webhooks.brandkrew.com/elementor/...',
-				'description' => esc_html__( 'Enter the Webhook URL of your current Insights Dashboard.', 'elementor-forms-bk-action' ),
+				'placeholder' => 'https://webhooks.trackyourleads.co/elementor/...',
+				'description' => esc_html__( 'Enter the Webhook URL of your current Dashboard.', 'elementor-forms-tyl-action' ),
 			]
 		);
 
 		$widget->add_control(
-			'bk_email_field',
+			'tyl_email_field',
 			[
-				'label' => esc_html__( 'Email Field ID', 'elementor-forms-bk-action' ),
+				'label' => esc_html__( 'Email Field ID', 'elementor-forms-tyl-action' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'placeholder' => 'Enter the email field ID',
 			]
 		);
 
 		$widget->add_control(
-			'bk_name_field',
+			'tyl_name_field',
 			[
-				'label' => esc_html__( 'Name Field ID', 'elementor-forms-bk-action' ),
+				'label' => esc_html__( 'Name Field ID', 'elementor-forms-tyl-action' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'placeholder' => 'Enter the name field ID',
 			]
@@ -106,12 +106,12 @@ class Bk_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classe
 		$settings = $record->get( 'form_settings' );
 
 		//  Make sure that there is a Webhook URL
-		if ( empty( $settings['bk_url'] ) ) {
+		if ( empty( $settings['tyl_url'] ) ) {
 			return;
 		}
 
 		// Make sure that there is an email field ID
-		if ( empty( $settings['bk_email_field'] ) ) {
+		if ( empty( $settings['tyl_email_field'] ) ) {
 			return;
 		}
 
@@ -125,28 +125,28 @@ class Bk_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classe
 		}
 
 		// Make sure the user entered an email
-		if ( empty( $fields[ $settings['bk_email_field'] ] ) ) {
+		if ( empty( $fields[ $settings['tyl_email_field'] ] ) ) {
 			return;
 		}
 
 		// Request data for the Webhook
-		$bk_data = [
-			'Name' => $fields[ $settings['bk_name_field'] ],
-			'Email' => $fields[ $settings['bk_email_field'] ],
+		$tyl_data = [
+			'Name' => $fields[ $settings['tyl_name_field'] ],
+			'Email' => $fields[ $settings['tyl_email_field'] ],
 			'Page URL' => isset( $_POST['referrer'] ) ? $_POST['referrer'] : '',
 		];
 
 		// Add name if field is mapped.
-		if ( empty( $fields[ $settings['bk_name_field'] ] ) ) {
-			$bk_data['name'] = $fields[ $settings['bk_name_field'] ];
+		if ( empty( $fields[ $settings['tyl_name_field'] ] ) ) {
+			$tyl_data['name'] = $fields[ $settings['tyl_name_field'] ];
 		}
 
 		// Send the request.
 		try {
 			wp_remote_post(
-				$settings['bk_url'],
+				$settings['tyl_url'],
 				[
-					'body' => $bk_data,
+					'body' => $tyl_data,
 				]
 			);
 		} catch (Exception $e) {
@@ -169,9 +169,9 @@ class Bk_Insights_Action_After_Submit extends \ElementorPro\Modules\Forms\Classe
 	public function on_export( $element ) {
 
 		unset(
-			$element['bk_url'],
-			$element['bk_email_field'],
-			$element['bk_name_field']
+			$element['tyl_url'],
+			$element['tyl_email_field'],
+			$element['tyl_name_field']
 		);
 
 		return $element;
